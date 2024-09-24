@@ -1,4 +1,4 @@
-import { useRef, useState} from 'react';
+import { useRef, useState, useEffect} from 'react';
 
 import Places from './components/Places.jsx';
 import { AVAILABLE_PLACES } from './data.js';
@@ -15,15 +15,16 @@ function App() {
 
   
 
-  // This cause inifinit loops because it will recall the functio again and again and the App will damage.
-  navigator.geolocation.getCurrentPosition(() => {
-   const sortedPlaces = sortPlacesByDistance(
-    AVAILABLE_PLACES,
-     position.coords.latitude,
-     position.coords.longitude 
-    );
-    setAvailablePlaces(sortedPlaces)
-  }); 
+  useEffect(()=>{
+    navigator.geolocation.getCurrentPosition((position) => {
+      const sortedPlaces = sortPlacesByDistance(
+       AVAILABLE_PLACES,
+        position.coords.latitude,
+        position.coords.longitude 
+       );
+       setAvailablePlaces(sortedPlaces)
+     }); 
+  }, []);
 
   function handleStartRemovePlace(id) {
     modal.current.open();
