@@ -27,7 +27,7 @@ function App() {
         position.coords.latitude,
         position.coords.longitude 
        );
-       
+
        setAvailablePlaces(sortedPlaces)
      }); 
   }, []);
